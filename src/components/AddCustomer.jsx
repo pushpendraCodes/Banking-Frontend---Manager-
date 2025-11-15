@@ -22,7 +22,7 @@ const AddCustomer = () => {
   useEffect(() => {
     const fetchAgents = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/agent?managerId=${managerId}`, {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/agent?managerId=${managerId}&all=true`, {
           headers: {
             Authorization: `Bearer ${token}`
 
