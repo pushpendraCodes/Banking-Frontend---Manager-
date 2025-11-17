@@ -32,7 +32,7 @@ export default function CreateLoan() {
       }));
     }
   };
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   const validateForm = () => {
   const newErrors = {};

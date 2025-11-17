@@ -14,7 +14,7 @@ function ViewCoustomer() {
   const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const token = localStorage.getItem("token")
+  const token = sessionStorage.getItem("token")
   // ✅ Fetch customer details
   useEffect(() => {
     const fetchDetails = async () => {

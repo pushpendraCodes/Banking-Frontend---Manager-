@@ -55,7 +55,7 @@ export default function CreateLakhpatiSchem() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   const handleSubmit = async (e) => {
     e.preventDefault();

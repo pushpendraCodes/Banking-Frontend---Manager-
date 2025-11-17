@@ -16,7 +16,7 @@ export default function CreateFDForm() {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({

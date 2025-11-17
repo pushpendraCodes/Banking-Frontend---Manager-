@@ -10,7 +10,7 @@ function ViewAreaManager() {
   const [customer, setManager] = useState(null); // manager ka data yaha aayega
   const [loading, setLoading] = useState(true);
 
-  const token = localStorage.getItem("token")
+  const token = sessionStorage.getItem("token")
 
   // ✅ API Call
   useEffect(() => {

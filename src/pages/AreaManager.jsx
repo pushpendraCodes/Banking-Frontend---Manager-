@@ -18,8 +18,8 @@ export default function AreaManager() {
 
   
 
-  const token = localStorage.getItem("token");
-const managerId =JSON.parse( localStorage.getItem("user"))._id
+  const token = sessionStorage.getItem("token");
+const managerId =JSON.parse( sessionStorage.getItem("user"))._id
 //   // 🔽 Fetch Managers for dropdown
 //   const fetchManagersList = async () => {
 //     try {

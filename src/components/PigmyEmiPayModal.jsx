@@ -30,7 +30,7 @@ export default function PigmyEmiPayModal({ pigmy, customerId }) {
     setFormData(prev => ({ ...prev, [name]: value }));
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
   };
-const token = localStorage.getItem("token");
+const token = sessionStorage.getItem("token");
   const validateForm = () => {
     const newErrors = {};
     if (!formData.pigMyAccountNumber) newErrors.pigMyAccountNumber = 'Pigmy Account Number is required';

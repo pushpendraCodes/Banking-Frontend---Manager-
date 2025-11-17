@@ -3,7 +3,7 @@ import { X, DollarSign, AlertTriangle, CheckCircle, Calculator } from "lucide-re
 import moment from "moment";
 
 const LakhpatiMaturityModal = ({ customer, lakhpatiYojanaAccountNumber }) => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   const [isOpen, setIsOpen] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [formData, setFormData] = useState({

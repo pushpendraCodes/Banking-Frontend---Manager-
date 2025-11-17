@@ -8,7 +8,7 @@ function ProfilePage() {
   const [showPasswordPopup, setShowPasswordPopup] = useState(false);
 
 
-  const manager = JSON.parse(localStorage.getItem("user"))
+  const manager = JSON.parse(sessionStorage.getItem("user"))
 
   return (
     <>

@@ -27,7 +27,7 @@ function ViewAgent() {
     });
 
     const [search, setSearch] = useState("");
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     const fetchCustomers = async () => {
         setLoading(true);
         try {

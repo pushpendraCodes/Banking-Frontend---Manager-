@@ -19,10 +19,10 @@ function Login() {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/manager/login`, { email, password });
 
       if (response.data.success) {
-        localStorage.setItem("token", response.data.token);
+        sessionStorage.setItem("token", response.data.token);
 
         if (response.data.data) {
-          localStorage.setItem("user", JSON.stringify(response.data.data));
+          sessionStorage.setItem("user", JSON.stringify(response.data.data));
         }
 
         navigate("/");

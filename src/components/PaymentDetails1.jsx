@@ -9,7 +9,7 @@ const PaymentDetails1 = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   const fetchTransaction = async () => {
     try {

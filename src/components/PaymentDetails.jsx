@@ -14,7 +14,7 @@ function PaymentDetails() {
   const [page, setPage] = useState(1);
   const [limit] = useState(10); // fixed page size, can make dropdown
   const [total, setTotal] = useState(0);
-const token = localStorage.getItem("token");
+const token = sessionStorage.getItem("token");
   useEffect(() => {
     const fetchTransaction = async () => {
       try {

@@ -19,7 +19,7 @@ const EditAreaManager = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   // fetch managers for dropdown
 //   const fetchManagers = async () => {
@@ -224,6 +224,9 @@ const EditAreaManager = () => {
                   value: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
                   message: "Invalid PAN",
                 },
+                           onChange: (e) => {
+        e.target.value = e.target.value.toUpperCase();
+      }
               })}
               placeholder="PAN Card"
               className="w-full p-3 border border-gray-200 rounded-lg bg-gray-50 outline-none uppercase"

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { X, DollarSign, AlertTriangle, CheckCircle } from "lucide-react";
 
 const MipMaturityModal = ({ customer, mipScheme }) => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   const [isOpen, setIsOpen] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [formData, setFormData] = useState({

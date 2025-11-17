@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 export default function CreatePigmyForm() {
   const { customerId,savingAc } = useParams();
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   const [formData, setFormData] = useState({
     type: "savings",
     pigmyDailyDeposit: "",

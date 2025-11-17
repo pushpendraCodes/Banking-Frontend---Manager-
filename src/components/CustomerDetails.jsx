@@ -22,7 +22,7 @@ function CustomerDetails() {
   const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const token = localStorage.getItem("token")
+  const token = sessionStorage.getItem("token")
 
   const fetchDetails = async () => {
     try {

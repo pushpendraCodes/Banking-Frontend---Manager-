@@ -4,7 +4,7 @@ import moment from "moment";
 
 const PigmyMaturityModal = ({ customer, pigMyAccountNumber }) => {
     console.log(pigMyAccountNumber, "pigmyAccountNumber")
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     const [isOpen, setIsOpen] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [formData, setFormData] = useState({

@@ -20,9 +20,9 @@ export default function Agent() {
   // delete modal
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   const [areaManagerId, setAreaManagerId] = useState("");
-  const manager = JSON.parse(localStorage.getItem("user"));
+  const manager = JSON.parse(sessionStorage.getItem("user"));
 
   // Area Manager dropdown search functionality
   const [areaManagers, setAreaManagers] = useState([]);
@@ -59,7 +59,7 @@ export default function Agent() {
     }
   };
 
-  const managerId = JSON.parse(localStorage.getItem("user"))._id;
+  const managerId = JSON.parse(sessionStorage.getItem("user"))._id;
   const fetchAreaManagers = async () => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/areaManager?managerId=${managerId}`, {

@@ -3,7 +3,7 @@ import { X, DollarSign, AlertTriangle, CheckCircle, Calculator, Clock } from "lu
 import moment from "moment";
 
 const RdMaturityModal = ({ customer, rdAccountNumber }) => {
-  const token = localStorage.getItem("token")
+  const token = sessionStorage.getItem("token")
   console.log(customer, "customer")
   const [isOpen, setIsOpen] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);

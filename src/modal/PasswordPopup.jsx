@@ -5,7 +5,7 @@ import { FaCheck } from "react-icons/fa";
 export default function PasswordPopup({ show, onClose }) {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const manager = JSON.parse(localStorage.getItem("user"))
+    const manager = JSON.parse(sessionStorage.getItem("user"))
     if (!show) return null;
 
     const handleSubmit = async (e) => {

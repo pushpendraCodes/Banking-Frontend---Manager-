@@ -21,8 +21,8 @@ const EditAgent = () => {
     formState: { errors, isSubmitting }
   } = useForm();
 
-  const token = localStorage.getItem("token");
-  const managerId = JSON.parse(localStorage.getItem("user"))._id
+  const token = sessionStorage.getItem("token");
+  const managerId = JSON.parse(sessionStorage.getItem("user"))._id
   const [agent, setAgent] = useState({})
   useEffect(() => {
     axios
@@ -197,7 +197,10 @@ const EditAgent = () => {
             <label className="block font-semibold text-sm mb-1 text-gray-700 mt-6">PAN Card</label>
             <input {...register("panCard", {
               required: "PAN required",
-              pattern: { value: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, message: "Invalid PAN" }
+              pattern: { value: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, message: "Invalid PAN" },
+                         onChange: (e) => {
+        e.target.value = e.target.value.toUpperCase();
+      }
             })} placeholder="PAN Card"
               className="w-full p-3 border border-gray-200 rounded-lg bg-gray-50 outline-none uppercase" />
             {errors.panCard && <p className="text-red-500 text-xs mt-1">{errors.panCard.message}</p>}
@@ -458,7 +461,10 @@ const EditAgent = () => {
                     pattern: {
                       value: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
                       message: "Invalid PAN format"
-                    }
+                    },
+                               onChange: (e) => {
+        e.target.value = e.target.value.toUpperCase();
+      }
                   })}
                   placeholder="Nominee PAN"
                   className={`w-full p-3 border ${errors?.NomineeDetails?.panCard

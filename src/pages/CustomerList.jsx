@@ -45,8 +45,8 @@ export default function CustomerList() {
   const [deleteId, setDeleteId] = useState(null);
   const [showSortModal, setShowSortModal] = useState(false);
 
-  const token = localStorage.getItem("token");
-  const managerId = JSON.parse(localStorage.getItem("user"))._id;
+  const token = sessionStorage.getItem("token");
+  const managerId = JSON.parse(sessionStorage.getItem("user"))._id;
 
   const fetchAgents = async () => {
     try {

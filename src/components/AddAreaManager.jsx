@@ -18,8 +18,8 @@ const AddAreaManager = () => {
         formState: { errors, isSubmitting },
     } = useForm();
 
-    const token = localStorage.getItem("token");
-    const managerId = JSON.parse(localStorage.getItem("user"))._id
+    const token = sessionStorage.getItem("token");
+    const managerId = JSON.parse(sessionStorage.getItem("user"))._id
     //   const fetchManagers = async () => {
     //     try {
     //       setLoading(true);
@@ -207,6 +207,9 @@ const AddAreaManager = () => {
                                         value: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
                                         message: "Format: ABCDE1234F",
                                     },
+                                               onChange: (e) => {
+        e.target.value = e.target.value.toUpperCase();
+      }
                                 })}
                                 placeholder="Enter PAN Card Number"
                                 className={`w-full p-3 border ${errors.panCard

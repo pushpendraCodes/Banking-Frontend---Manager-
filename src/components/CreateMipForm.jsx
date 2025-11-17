@@ -14,7 +14,7 @@ export default function CreateMipForm() {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -17,8 +17,8 @@ const AddCustomer = () => {
   const [agents, setAgents] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
 
-  const token = localStorage.getItem("token")
-  const managerId = JSON.parse(localStorage.getItem("user"))._id
+  const token = sessionStorage.getItem("token")
+  const managerId = JSON.parse(sessionStorage.getItem("user"))._id
   useEffect(() => {
     const fetchAgents = async () => {
       try {
@@ -427,7 +427,10 @@ const AddCustomer = () => {
                   pattern: {
                     value: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
                     message: "PAN Card format: ABCDE1234F (5 letters, 4 digits, 1 letter)"
-                  }
+                  },
+                  onChange: (e) => {
+        e.target.value = e.target.value.toUpperCase();
+      }
                 })}
                 placeholder="Enter PAN Card Number"
                 className={`w-full p-3 border ${errors.panCard
@@ -669,7 +672,10 @@ const AddCustomer = () => {
                     pattern: {
                       value: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
                       message: "PAN Card format: ABCDE1234F (5 letters, 4 digits, 1 letter)"
-                    }
+                    },
+                    onChange: (e) => {
+        e.target.value = e.target.value.toUpperCase();
+      }
                   })}
                   placeholder="Enter Nominee PAN Number"
                   className={`w-full p-3 border ${errors?.NomineeDetails?.panCard

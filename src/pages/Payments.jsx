@@ -27,7 +27,7 @@ export default function Payments() {
   const [toDate, setToDate] = useState("");
   const [dateFilter, setDateFilter] = useState(""); // "today" | "yesterday" | ""
 
-  const manager = JSON.parse(localStorage.getItem("user"));
+  const manager = JSON.parse(sessionStorage.getItem("user"));
   const [agents, setAgents] = useState([]);
   const [areaManagers, setAreaManagers] = useState([]);
   const [customers, setCustomers] = useState([]);
@@ -52,8 +52,8 @@ export default function Payments() {
  const schemeTypeOptions = ["FD", "RD", "LOAN", "PIGMY","SAVING_ACCOUNT","Lakhpati","MIP"];
 
 
-  const managerId = JSON.parse(localStorage.getItem("user"))._id
-  const token = localStorage.getItem("token");
+  const managerId = JSON.parse(sessionStorage.getItem("user"))._id
+  const token = sessionStorage.getItem("token");
 
   // Debounce search input
   useEffect(() => {

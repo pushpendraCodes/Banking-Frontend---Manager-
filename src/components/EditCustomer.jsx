@@ -12,9 +12,9 @@ const EditCustomer = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [existingSignature, setExistingSignature] = useState(null);
-const managerId = JSON.parse(localStorage.getItem("user"))._id
+const managerId = JSON.parse(sessionStorage.getItem("user"))._id
 
- const token = localStorage.getItem("token")
+ const token = sessionStorage.getItem("token")
  
   const {
     register,
@@ -51,7 +51,7 @@ const managerId = JSON.parse(localStorage.getItem("user"))._id
   // add this state at top inside your component
   const [previewSignature, setPreviewSignature] = useState(null);
   const [newSignatureFile, setNewSignatureFile] = useState(null);
-  // const token = localStorage.getItem("token");
+  // const token = sessionStorage.getItem("token");
   const [customer, setCustomer] = useState({})
  const [profilePreview, setProfilePreview] = useState(null);
   const [newProfilePictureFile, setNewProfilePictureFile] = useState(null);
@@ -282,19 +282,35 @@ const managerId = JSON.parse(localStorage.getItem("user"))._id
                   id="profilePictureInput"
                   type="file"
                   accept="image/jpeg,image/jpg,image/png"
-                  {...register("profilePicture", {
-                    validate: {
-                      fileType: (files) => {
-                        if (!files || !files[0]) return true; // Optional field
-                        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-                        return allowedTypes.includes(files[0].type) || "Only JPG and PNG files are allowed";
-                      },
-                      fileSize: (files) => {
-                        if (!files || !files[0]) return true; // Optional field
-                        return files[0].size <= 5 * 1024 * 1024 || "File size must be less than 5MB";
-                      }
-                    }
-                  })}
+                {...register("profilePicture", {
+  validate: {
+    fileType: (value) => {
+      // If it's a string (existing URL) or empty, it's valid
+      if (!value || typeof value === 'string') return true;
+      
+      // If it's a FileList, validate it
+      if (value instanceof FileList || value.length !== undefined) {
+        if (value.length === 0 || !value[0]) return true; // No new file selected
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+        return allowedTypes.includes(value[0].type) || "Only JPG and PNG files are allowed";
+      }
+      
+      return true;
+    },
+    fileSize: (value) => {
+      // If it's a string (existing URL) or empty, it's valid
+      if (!value || typeof value === 'string') return true;
+      
+      // If it's a FileList, validate it
+      if (value instanceof FileList || value.length !== undefined) {
+        if (value.length === 0 || !value[0]) return true; // No new file selected
+        return value[0].size <= 5 * 1024 * 1024 || "File size must be less than 5MB";
+      }
+      
+      return true;
+    }
+  }
+})}
                   className={`w-full p-3 border ${errors.profilePicture
                     ? "border-red-400"
                     : "border-gray-200 focus:border-yellow-400"
@@ -476,7 +492,10 @@ const managerId = JSON.parse(localStorage.getItem("user"))._id
                 pattern: {
                   value: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
                   message: "Invalid PAN format"
-                }
+                },
+                onChange: (e) => {
+        e.target.value = e.target.value.toUpperCase();
+      }
               })}
               className={`w-full p-3 border ${errors.panCard ? "border-red-400" : "border-gray-200"
                 } rounded-lg bg-gray-50 outline-none duration-200 uppercase`}
@@ -748,7 +767,10 @@ const managerId = JSON.parse(localStorage.getItem("user"))._id
                     pattern: {
                       value: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
                       message: "Invalid PAN format"
-                    }
+                    },
+                    onChange: (e) => {
+        e.target.value = e.target.value.toUpperCase();
+      }
                   })}
                   placeholder="Nominee PAN"
                   className={`w-full p-3 border ${errors?.NomineeDetails?.panCard
