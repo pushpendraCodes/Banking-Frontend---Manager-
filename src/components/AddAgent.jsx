@@ -359,7 +359,7 @@ const AddAgent = () => {
             {/* Manager */}
             <div>
               <label className="block font-semibold text-sm mb-1 text-gray-700">
-                Manager <span className="text-red-500">*</span>
+               Area Manager <span className="text-red-500">*</span>
               </label>
               <select
                 {...register("areaManagerId", { required: "Manager selection is required" })}
@@ -373,8 +373,8 @@ const AddAgent = () => {
                   </option>
                 ))}
               </select>
-              {errors.managerId && (
-                <p className="text-red-500 text-xs mt-1">{errors.managerId.message}</p>
+              {errors.areaManagerId && (
+                <p className="text-red-500 text-xs mt-1">{errors.areaManagerId.message}</p>
               )}
             </div>
           </div>
@@ -556,7 +556,7 @@ const AddAgent = () => {
                   type="text"
                   maxLength={10}
                   {...register("NomineeDetails.panCard", {
-                    required: "Nominee PAN Card is required",
+                    // required: "Nominee PAN Card is required",
                     pattern: {
                       value: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
                       message: "PAN Card format: ABCDE1234F (5 letters, 4 digits, 1 letter)",

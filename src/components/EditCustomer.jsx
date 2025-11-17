@@ -763,7 +763,7 @@ const managerId = JSON.parse(sessionStorage.getItem("user"))._id
                   type="text"
                   maxLength={10}
                   {...register("NomineeDetails.panCard", {
-                    required: "PAN required",
+                    // required: "PAN required",
                     pattern: {
                       value: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
                       message: "Invalid PAN format"

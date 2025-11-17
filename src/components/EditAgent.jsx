@@ -177,7 +177,7 @@ const EditAgent = () => {
             <label className="block font-semibold text-sm mb-1 text-gray-700 mt-6">Area Manager</label>
             <select {...register("areaManagerId", { required: "Manager required" })}
               className="w-full p-3 border border-gray-200 rounded-lg bg-gray-50 outline-none">
-              <option value="">Select Manager</option>
+              <option value="">Select  Manager</option>
               {managers.map((manager) => (
                 <option key={manager._id} value={manager._id}>{manager.name}</option>
               ))}
@@ -457,7 +457,7 @@ const EditAgent = () => {
                   type="text"
                   maxLength={10}
                   {...register("NomineeDetails.panCard", {
-                    required: "PAN required",
+                    // required: "PAN required",
                     pattern: {
                       value: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
                       message: "Invalid PAN format"
