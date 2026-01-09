@@ -29,7 +29,7 @@ function ViewAgent() {
     const [search, setSearch] = useState("");
     const token = sessionStorage.getItem("token");
     const fetchCustomers = async () => {
-        setLoading(true);
+        // setLoading(true);
         try {
             let url = `${import.meta.env.VITE_API_URL}/agent/getCoustomer/${id}?page=${page}&limit=${limit}`;
             const params = [];
@@ -59,13 +59,13 @@ function ViewAgent() {
         } catch (err) {
             setError(err.message);
         } finally {
-            setLoading(false);
+            // setLoading(false);
         }
     };
 
     const fetchAgent = async () => {
         try {
-            const res = await axios.get(`${import.meta.env.VITE_API_URL}/agent/${id}`,{
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/agent/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
 
@@ -79,13 +79,18 @@ function ViewAgent() {
         }
     };
 
+    useEffect(() => {
+        fetchAgent();
+        fetchCustomers();
+    }, [id])
+
 
     useEffect(() => {
 
-
-        fetchAgent();
         fetchCustomers();
-    }, [id]);
+
+
+    }, [ page, limit]);
 
     if (loading) {
         return <p className="text-center text-gray-500">Loading customers...</p>;

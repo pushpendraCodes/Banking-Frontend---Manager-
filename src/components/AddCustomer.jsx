@@ -36,9 +36,9 @@ const AddCustomer = () => {
     fetchAgents();
   }, []);
 
- const profilePicture = watch("profilePicture");
+  const profilePicture = watch("profilePicture");
   const [profilePreview, setProfilePreview] = useState(null);
-    // Handle profile picture preview
+  // Handle profile picture preview
   useEffect(() => {
     if (profilePicture && profilePicture[0]) {
       const file = profilePicture[0];
@@ -126,67 +126,67 @@ const AddCustomer = () => {
           id="customerForm"
           onSubmit={handleSubmit(onSubmit)}
         >
-          
-     <div className="mb-8 flex flex-col items-center">
-              <h3 className="font-semibold mb-4 text-gray-700 text-center">
-                Profile Picture
-              </h3>
-              
-              <div className="relative">
-                {profilePreview ? (
-                  <div className="relative">
-                    <img
-                      src={profilePreview}
-                      alt="Profile Preview"
-                      className="w-32 h-32 rounded-full object-cover border-4 border-yellow-200 shadow-lg"
-                    />
-                    <button
-                      type="button"
-                      onClick={removeProfilePicture}
-                      className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-colors shadow-lg"
-                      title="Remove Picture"
-                    >
-                      <FaTimes size={12} />
-                    </button>
-                  </div>
-                ) : (
-                  <div className="w-32 h-32 rounded-full bg-gray-100 border-4 border-yellow-200 flex items-center justify-center shadow-lg">
-                    <FaCamera className="text-gray-400 text-2xl" />
-                  </div>
-                )}
-              </div>
 
-              <div className="mt-4 w-full max-w-sm">
-                <input
-                  id="profilePictureInput"
-                  type="file"
-                  accept="image/jpeg,image/jpg,image/png"
-                  {...register("profilePicture", {
-                    validate: {
-                      fileType: (files) => {
-                        if (!files || !files[0]) return true; // Optional field
-                        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-                        return allowedTypes.includes(files[0].type) || "Only JPG and PNG files are allowed";
-                      },
-                      fileSize: (files) => {
-                        if (!files || !files[0]) return true; // Optional field
-                        return files[0].size <= 5 * 1024 * 1024 || "File size must be less than 5MB";
-                      }
-                    }
-                  })}
-                  className={`w-full p-3 border ${errors.profilePicture
-                    ? "border-red-400"
-                    : "border-gray-200 focus:border-yellow-400"
-                    } rounded-lg bg-gray-50 outline-none duration-200`}
-                />
-                {errors.profilePicture && (
-                  <p className="text-red-500 text-xs mt-1">{errors.profilePicture.message}</p>
-                )}
-                <p className="text-xs text-gray-500 mt-1">
-                  Optional: Upload JPG or PNG (max 5MB)
-                </p>
-              </div>
+          <div className="mb-8 flex flex-col items-center">
+            <h3 className="font-semibold mb-4 text-gray-700 text-center">
+              Profile Picture
+            </h3>
+
+            <div className="relative">
+              {profilePreview ? (
+                <div className="relative">
+                  <img
+                    src={profilePreview}
+                    alt="Profile Preview"
+                    className="w-32 h-32 rounded-full object-cover border-4 border-yellow-200 shadow-lg"
+                  />
+                  <button
+                    type="button"
+                    onClick={removeProfilePicture}
+                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-colors shadow-lg"
+                    title="Remove Picture"
+                  >
+                    <FaTimes size={12} />
+                  </button>
+                </div>
+              ) : (
+                <div className="w-32 h-32 rounded-full bg-gray-100 border-4 border-yellow-200 flex items-center justify-center shadow-lg">
+                  <FaCamera className="text-gray-400 text-2xl" />
+                </div>
+              )}
             </div>
+
+            <div className="mt-4 w-full max-w-sm">
+              <input
+                id="profilePictureInput"
+                type="file"
+                accept="image/jpeg,image/jpg,image/png"
+                {...register("profilePicture", {
+                  validate: {
+                    fileType: (files) => {
+                      if (!files || !files[0]) return true; // Optional field
+                      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                      return allowedTypes.includes(files[0].type) || "Only JPG and PNG files are allowed";
+                    },
+                    fileSize: (files) => {
+                      if (!files || !files[0]) return true; // Optional field
+                      return files[0].size <= 5 * 1024 * 1024 || "File size must be less than 5MB";
+                    }
+                  }
+                })}
+                className={`w-full p-3 border ${errors.profilePicture
+                  ? "border-red-400"
+                  : "border-gray-200 focus:border-yellow-400"
+                  } rounded-lg bg-gray-50 outline-none duration-200`}
+              />
+              {errors.profilePicture && (
+                <p className="text-red-500 text-xs mt-1">{errors.profilePicture.message}</p>
+              )}
+              <p className="text-xs text-gray-500 mt-1">
+                Optional: Upload JPG or PNG (max 5MB)
+              </p>
+            </div>
+          </div>
           <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
             {/* NAME */}
 
@@ -429,8 +429,8 @@ const AddCustomer = () => {
                     message: "PAN Card format: ABCDE1234F (5 letters, 4 digits, 1 letter)"
                   },
                   onChange: (e) => {
-        e.target.value = e.target.value.toUpperCase();
-      }
+                    e.target.value = e.target.value.toUpperCase();
+                  }
                 })}
                 placeholder="Enter PAN Card Number"
                 className={`w-full p-3 border ${errors.panCard
@@ -441,6 +441,31 @@ const AddCustomer = () => {
               />
               {errors.panCard && (
                 <p className="text-red-500 text-xs mt-1">{errors.panCard.message}</p>
+              )}
+            </div>
+            <div>
+              <label className="block font-semibold text-sm mb-1 text-gray-700">
+                Saving AC Number <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                maxLength={10}
+                {...register("savingAccountNumber", {
+                  required: "Account number is required",
+                
+                  // onChange: (e) => {
+                  //   e.target.value = e.target.value.toUpperCase();
+                  // }
+                })}
+                placeholder="Enter Saving Account Number "
+                className={`w-full p-3 border ${errors.savingAccountNumber
+                  ? "border-red-400"
+                  : "border-gray-200 focus:border-yellow-400"
+                  } rounded-lg bg-gray-50 outline-none duration-200`}
+             
+              />
+              {errors.savingAccountNumber && (
+                <p className="text-red-500 text-xs mt-1">{errors.savingAccountNumber.message}</p>
               )}
             </div>
 
@@ -674,8 +699,8 @@ const AddCustomer = () => {
                       message: "PAN Card format: ABCDE1234F (5 letters, 4 digits, 1 letter)"
                     },
                     onChange: (e) => {
-        e.target.value = e.target.value.toUpperCase();
-      }
+                      e.target.value = e.target.value.toUpperCase();
+                    }
                   })}
                   placeholder="Enter Nominee PAN Number"
                   className={`w-full p-3 border ${errors?.NomineeDetails?.panCard

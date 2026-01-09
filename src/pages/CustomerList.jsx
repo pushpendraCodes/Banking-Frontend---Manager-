@@ -1,10 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { FaEye, FaTrash, FaPen, FaChevronDown } from "react-icons/fa";
+import { FaEye, FaTrash, FaPen, FaChevronDown, FaUnlock, FaLock } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 import ShortPopup from "../modal/ShortPopup";
 import DeletePopup from "../modal/DeletePopup";
+import DepositBalanceModal from "../components/DepositBalanceModal";
 
 export default function CustomerList() {
   const [customers, setCustomers] = useState([]);
@@ -209,6 +210,92 @@ export default function CustomerList() {
     }
   };
 
+
+
+  // deosit balalance
+  const onDeposit = async ({ amount, customerId }) => {
+    try {
+
+
+
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/customer/deposit/balance`,
+        {
+          customerId,
+          amount
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        }
+      );
+
+      if (response.data.success) {
+        alert("Balance deposited successfully");
+        fetchCustomers()
+        // 🔄 update UI balance
+        // setCustomers((prev) => ({
+        //   ...prev,
+        //   savingAccountBalance: response.data.savingAccountBalance
+        // }));
+      }
+
+    } catch (error) {
+      console.error(error);
+      alert(
+        error.response?.data?.message || "Failed to deposit balance"
+      );
+    }
+  };
+
+
+  // toggle account status
+  const toggleAccount = async ({ customerId, savingAccountStatus }) => {
+    const isActive = savingAccountStatus === "active";
+
+    const confirmMsg = isActive
+      ? "Are you sure you want to CLOSE this customer account?"
+      : "Are you sure you want to RE-OPEN this customer account?";
+
+    if (!window.confirm(confirmMsg)) return;
+
+    try {
+      setLoading(true);
+
+      // const token = localStorage.getItem("token");
+
+      const res = await axios.put(
+        `${import.meta.env.VITE_API_URL}/customer/${customerId}/toggle-account-status`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        }
+      );
+
+      if (res.data.success) {
+        alert(res.data.message);
+
+        // 🔄 update table row instantly
+        // 
+
+        fetchCustomers()
+      }
+
+    } catch (error) {
+      console.error(error);
+      alert(
+        error.response?.data?.message || "Failed to update account status"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (loading) return <p className="text-center text-gray-500">Loading customers...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
@@ -250,11 +337,10 @@ export default function CustomerList() {
               className="border border-gray-400 px-3 py-2 pr-8 rounded w-full focus:outline-none focus:border-blue-500"
             />
             <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-              <FaChevronDown 
-                className={`text-gray-400 transition-transform duration-200 ${
-                  isAreaManagerDropdownOpen ? 'rotate-180' : ''
-                }`} 
-                size={12} 
+              <FaChevronDown
+                className={`text-gray-400 transition-transform duration-200 ${isAreaManagerDropdownOpen ? 'rotate-180' : ''
+                  }`}
+                size={12}
               />
             </div>
           </div>
@@ -267,15 +353,14 @@ export default function CustomerList() {
               >
                 <span className="font-medium">All Area Managers</span>
               </div>
-              
+
               {filteredAreaManagers.length > 0 ? (
                 filteredAreaManagers.map((manager) => (
                   <div
                     key={manager._id}
                     onClick={() => handleAreaManagerSelect(manager)}
-                    className={`px-4 py-2 hover:bg-blue-50 cursor-pointer ${
-                      selectedAreaManagerObj?._id === manager._id ? 'bg-blue-100' : ''
-                    }`}
+                    className={`px-4 py-2 hover:bg-blue-50 cursor-pointer ${selectedAreaManagerObj?._id === manager._id ? 'bg-blue-100' : ''
+                      }`}
                   >
                     <div className="font-medium">{manager.name}</div>
                     {manager.email && (
@@ -307,11 +392,10 @@ export default function CustomerList() {
               className="border border-gray-400 px-3 py-2 pr-8 rounded w-full focus:outline-none focus:border-blue-500"
             />
             <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-              <FaChevronDown 
-                className={`text-gray-400 transition-transform duration-200 ${
-                  isAgentDropdownOpen ? 'rotate-180' : ''
-                }`} 
-                size={12} 
+              <FaChevronDown
+                className={`text-gray-400 transition-transform duration-200 ${isAgentDropdownOpen ? 'rotate-180' : ''
+                  }`}
+                size={12}
               />
             </div>
           </div>
@@ -324,15 +408,14 @@ export default function CustomerList() {
               >
                 <span className="font-medium">All Agents</span>
               </div>
-              
+
               {filteredAgents.length > 0 ? (
                 filteredAgents.map((agent) => (
                   <div
                     key={agent._id}
                     onClick={() => handleAgentSelect(agent)}
-                    className={`px-4 py-2 hover:bg-blue-50 cursor-pointer ${
-                      selectedAgentObj?._id === agent._id ? 'bg-blue-100' : ''
-                    }`}
+                    className={`px-4 py-2 hover:bg-blue-50 cursor-pointer ${selectedAgentObj?._id === agent._id ? 'bg-blue-100' : ''
+                      }`}
                   >
                     <div className="font-medium">{agent.name}</div>
                     {agent.email && (
@@ -402,24 +485,71 @@ export default function CustomerList() {
             <tr>
               <th className="px-4 py-2 border">#</th>
               <th className="px-4 py-2 border">Name</th>
-              <th className="px-4 py-2 border">Email</th>
+              <th className="px-4 py-2 border">Open Date</th>
+              <th className="px-4 py-2 border">Open Bal</th>
+              <th className="px-4 py-2 border">Close Bal</th>
+              {/* <th className="px-4 py-2 border">Email</th> */}
               <th className="px-4 py-2 border">Contact</th>
+              <th className="px-4 py-2 border">Status</th>
               <th className="px-4 py-2 border">Address</th>
               <th className="px-4 py-2 border">Action</th>
             </tr>
           </thead>
-          <tbody>
+            <tbody>
             {customers.length ? customers.map((cust, idx) => (
               <tr key={cust._id} className="odd:bg-white even:bg-yellow-50">
                 <td className="px-4 py-2 border">{(page - 1) * limit + idx + 1}</td>
                 <td className="px-4 py-2 border">{cust.name}</td>
-                <td className="px-4 py-2 border"><a href={`mailto:${cust.email}`} className="text-blue-600 hover:underline">{cust.email}</a></td>
+                <td className="px-4 py-2 border">
+                  {cust.createdAt ? new Date(cust.createdAt).toLocaleDateString('en-GB') : '-'}
+                </td>
+
+                <td className="px-4 py-2 border">0.00</td>
+                <td className="px-4 py-2 border">
+                  {Number(cust.savingAccountBalance || 0).toFixed(2)}
+                </td>
+
+                {/* <td className="px-4 py-2 border"><a href={`mailto:${cust.email}`} className="text-blue-600 hover:underline">{cust.email}</a></td> */}
                 <td className="px-4 py-2 border"><a href={`tel:${cust.contact?.replace(/\s/g, "")}`} className="text-blue-600 hover:underline">{cust.contact}</a></td>
+                <td
+                  className={`px-4 py-2 border font-semibold ${cust.savingAccountStatus === "active"
+                    ? "text-black"
+                    : "text-red-600"
+                    }`}
+                >
+                  {cust.savingAccountStatus}
+                </td>
+
                 <td className="px-4 py-2 border">{cust.address}</td>
                 <td className="px-4 py-2 border flex gap-2">
-                  <Link to={`/customers/view/${cust._id}`} className="bg-yellow-400 hover:bg-yellow-500 text-white p-2 rounded"><FaEye size={14} /></Link>
-                  <Link to={`/customers/edit/${cust._id}`} className="bg-yellow-400 hover:bg-yellow-500 text-white p-2 rounded"><FaPen size={14} /></Link>
-                  <button onClick={() => confirmDelete(cust._id)} className="bg-yellow-400 hover:bg-yellow-500 text-white p-2 rounded"><FaTrash size={14} /></button>
+                  <Link title="view" to={`/customers/view/${cust._id}`} className="bg-yellow-400 hover:bg-yellow-500 text-white p-2 rounded"><FaEye size={14} /></Link>
+                  <Link title="edit" to={`/customers/edit/${cust._id}`} className="bg-yellow-400 hover:bg-yellow-500 text-white p-2 rounded"><FaPen size={14} /></Link>
+                  <button title="delete" onClick={() => confirmDelete(cust._id)} className="bg-yellow-400 hover:bg-yellow-500 text-white p-2 rounded"><FaTrash size={14} /></button>
+
+                  <DepositBalanceModal
+                    customerId={cust._id}
+                    onDeposit={onDeposit}
+                  />
+
+
+                  <button
+                      title={
+                        cust.savingAccountStatus === "active"
+                          ? "Close Customer Account"
+                          : "Re-Open Customer Account"
+                      }
+                      onClick={() => toggleAccount({ customerId: cust._id, savingAccountStatus: cust.savingAccountStatus })}
+                      className={`flex items-center justify-center gap-2 px-3 py-2 mx-auto
+      rounded-md text-sm font-medium transition
+      ${cust.savingAccountStatus === "active"
+                          ? "bg-red-600 text-white hover:bg-red-700"
+                          : "bg-black text-white hover:bg-gray-800"
+                        }`}
+                    >
+                      {cust.savingAccountStatus === "active" ? <FaLock /> : <FaUnlock />}
+                      {/* {cust.savingAccountStatus === "active" ? "Close" : "Reopen"} */}
+                    </button>
+
                 </td>
               </tr>
             )) : (
@@ -432,7 +562,7 @@ export default function CustomerList() {
       {/* Pagination */}
       <div className="flex items-center justify-between mt-4">
         <button disabled={page === 1} onClick={() => setPage(prev => Math.max(prev - 1, 1))} className="px-3 py-1 border rounded disabled:opacity-50">Prev</button>
-        <span>Page {pagination.currentPage} of {pagination.totalPages}</span>
+        <span>Page {pagination.currentPage} of {pagination.totalPages}  ({pagination.totalItems})</span>
         <button disabled={page === pagination.totalPages} onClick={() => setPage(prev => prev + 1)} className="px-3 py-1 border rounded disabled:opacity-50">Next</button>
       </div>
 
