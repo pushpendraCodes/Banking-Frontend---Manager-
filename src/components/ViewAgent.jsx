@@ -7,6 +7,11 @@ import { FaArrowLeft, FaUser, FaEnvelope, FaPhone, FaTimes, FaExclamationTriangl
 import axios from "axios";
 // import { apiAgentUrl } from "../../api/apiRoutes";
 
+const maskSensitiveInfo = (info) => {
+    if (!info) return "N/A";
+    return String(info).replace(/.(?=.{4})/g, '*');
+};
+
 function ViewAgent() {
     const navigate = useNavigate();
     const { id } = useParams();
@@ -260,7 +265,7 @@ function ViewAgent() {
                                                 Aadhaar Number
                                             </span>
                                             <p className="text-gray-800 font-semibold">
-                                                {agent?.AadharNo || "N/A"}
+                                                {maskSensitiveInfo(agent?.AadharNo)}
                                             </p>
                                         </div>
                                     </div>
@@ -275,7 +280,7 @@ function ViewAgent() {
                                                 PAN Card
                                             </span>
                                             <p className="text-gray-800 font-semibold">
-                                                {agent?.panCard || "N/A"}
+                                                {maskSensitiveInfo(agent?.panCard)}
                                             </p>
                                         </div>
                                     </div>
@@ -472,7 +477,7 @@ function ViewAgent() {
                                             <div className="flex-1">
                                                 <span className="text-sm font-medium text-gray-600">Aadhaar Number</span>
                                                 <p className="text-gray-800 font-semibold">
-                                                    {agent.NomineeDetails.AadharNo || "N/A"}
+                                                    {maskSensitiveInfo(agent.NomineeDetails.AadharNo)}
                                                 </p>
                                             </div>
                                         </div>
@@ -485,7 +490,7 @@ function ViewAgent() {
                                             <div className="flex-1">
                                                 <span className="text-sm font-medium text-gray-600">PAN Card</span>
                                                 <p className="text-gray-800 font-semibold">
-                                                    {agent.NomineeDetails.panCard || "N/A"}
+                                                    {maskSensitiveInfo(agent.NomineeDetails.panCard)}
                                                 </p>
                                             </div>
                                         </div>

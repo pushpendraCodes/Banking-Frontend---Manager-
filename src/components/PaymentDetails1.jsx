@@ -224,7 +224,7 @@ const PaymentDetails1 = () => {
                 <FaIdCard className="text-blue-400 mt-0.5 shrink-0 text-base" />
                 <div className="min-w-0 flex-1">
                   <p className="text-xs text-gray-500 mb-0.5">Transaction Type</p>
-                  <p className="font-semibold text-sm text-gray-800 break-words">{paymentData?.transactionType || "N/A"}</p>
+                  <p className="font-semibold text-sm text-gray-800 break-words">{paymentData?.transactionType?.replace(/_/g, ' ').toUpperCase() || "N/A"}</p>
                 </div>
               </div>
             </div>

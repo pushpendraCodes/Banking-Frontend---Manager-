@@ -84,8 +84,9 @@ export default function RDEmiPayModal({ rd, customerId }) {
       );
 
       if (response.data.success) {
-        alert('RD EMI processed successfully! Approve the payment to complete the transaction');
+        alert('RD EMI processed successfully! ');
         closeModal();
+        window.location.reload();
       } else {
         alert(response.data.message || 'Failed to process RD EMI.');
       }

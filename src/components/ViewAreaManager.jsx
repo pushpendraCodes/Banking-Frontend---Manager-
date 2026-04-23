@@ -4,6 +4,11 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import axios from "axios";
 
+const maskSensitiveInfo = (info) => {
+  if (!info) return "N/A";
+  return String(info).replace(/.(?=.{4})/g, '*');
+};
+
 function ViewAreaManager() {
   const navigate = useNavigate();
   const { id } = useParams(); // ✅ URL se id le rahe hai
@@ -164,7 +169,7 @@ function ViewAreaManager() {
                     <div className="flex-1">
                       <span className="text-sm font-medium text-gray-600">Aadhaar Number</span>
                       <p className="text-gray-800 font-semibold">
-                        {customer?.AadharNo || "N/A"}
+                        {maskSensitiveInfo(customer?.AadharNo)}
                       </p>
                     </div>
                   </div>
@@ -177,7 +182,7 @@ function ViewAreaManager() {
                     <div className="flex-1">
                       <span className="text-sm font-medium text-gray-600">PAN Card</span>
                       <p className="text-gray-800 font-semibold">
-                        {customer?.panCard || "N/A"}
+                        {maskSensitiveInfo(customer?.panCard)}
                       </p>
                     </div>
                   </div>

@@ -83,8 +83,9 @@ export default function LakhpatiEmiPayModal({ lakhpatiSchemes, customerId, savin
       );
 
       if (response.data.success) {
-        alert('Lakhpati EMI processed successfully! Approve the Payment to complete the Transaction');
+        alert('Lakhpati EMI processed successfully!');
         closeModal();
+        window.location.reload();
       } else {
         alert(response.data.message || 'Failed to process EMI.');
       }

@@ -83,8 +83,9 @@ export default function LoanEmiPayModal({ loan, customerId }) {
       );
 
       if (response.data.success) {
-        alert('Loan EMI processed successfully! Approve the Payment to complete the Transaction');
+        alert('Loan EMI processed successfully! ');
         closeModal();
+        window.location.reload();
       } else {
         alert(response.data.message || 'Failed to process Loan EMI.');
       }

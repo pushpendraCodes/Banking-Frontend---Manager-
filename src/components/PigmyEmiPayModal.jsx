@@ -56,8 +56,9 @@ export default function PigmyEmiPayModal({ pigmy, customerId }) {
         }
       );
       if (response.data.success) {
-        alert('Pigmy EMI processed successfully! Approve the Payment to complete the Transaction');
+        alert('Pigmy EMI processed successfully!');
         closeModal();
+        window.location.reload();
       } else {
         alert(response.data.message || 'Failed to process Pigmy EMI.');
       }

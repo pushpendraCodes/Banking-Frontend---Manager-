@@ -100,11 +100,9 @@ export default function FDDepositModal({ fd, customerId, savingAc }) {
       );
 
       if (response.data.success) {
-        alert("Deposit processed successfully! Approve the Payment to complete the transaction");
+        alert("Deposit processed successfully! ");
         closeModal();
-
-        // Optionally refresh FD list after deposit
-        // fetchCustomerDetails();
+        window.location.reload();
       } else {
         alert(response.data.message || "Failed to process deposit.");
       }

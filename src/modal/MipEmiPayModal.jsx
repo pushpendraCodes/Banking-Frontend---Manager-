@@ -88,18 +88,18 @@ export default function MipEmiPayModal({ mipScheme, customerId, savingAc }) {
             );
 
             if (response.data.success) {
-                setSuccessMessage("✅ MIP deposit recorded successfully! please accept the transaction to complete the Payment.");
+                setSuccessMessage("✅ MIP deposit recorded successfully.");
                 setFormData({
                     amount: String(expectedAmount),
                     mode: "bankTransfer",
                     mipAccountNumber: mipScheme?.mipAccountNumber || "",
                 });
 
-                // Close modal after 2 seconds
                 setTimeout(() => {
                     setIsOpen(false);
                     setSuccessMessage(null);
                 }, 2000);
+                window.location.reload();
             } else {
                 setErrors({
                     form: response.data.message || "Failed to record MIP deposit",

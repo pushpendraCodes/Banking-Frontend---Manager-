@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { numberToWords } from "../helpers/noTowords";
 
 export default function CreateRDForm() {
   const { customerId, savingAc } = useParams();
@@ -250,12 +251,11 @@ export default function CreateRDForm() {
               {errors.rdInstallAmount}
             </p>
           )}
-          {formData.rdInstallAmount && (
-            <p className="mt-1 text-sm text-gray-500">
-              Amount in words: ₹
-              {parseInt(formData.rdInstallAmount).toLocaleString("en-IN")}
-            </p>
-          )}
+         {formData.rdInstallAmount && (
+  <p className="mt-1 text-sm text-gray-500">
+    Amount in words: ₹ {numberToWords(Number(formData.rdInstallAmount))}
+  </p>
+)}
         </div>
 
         {/* RD Interest Rate */}

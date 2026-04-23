@@ -147,8 +147,8 @@ export default function CreatePigmyForm() {
             onChange={handleChange}
             className="w-full px-4 py-2 border rounded-lg"
           >
-            <option value="savings">Savings</option>
-            <option value="fixed">Fixed</option>
+            <option value="savings">Savings Account</option>
+            <option value="fixed">Fixed Account</option>
           </select>
         </div>
 
@@ -208,7 +208,7 @@ export default function CreatePigmyForm() {
             onChange={handleChange}
             className="w-full px-4 py-2 border rounded-lg"
           >
-            <option value="month">Month(s)</option>
+            <option value="month">Months</option>
             {/* <option value="year">Year(s)</option>
             <option value="week">Week(s)</option> */}
           </select>
@@ -267,7 +267,7 @@ export default function CreatePigmyForm() {
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
             <span className="font-medium">Type:</span>{" "}
-            <span>{formData.type}</span>
+            <span>{(formData.type)}</span>
           </div>
           <div>
             <span className="font-medium">Saving Account:</span>{" "}

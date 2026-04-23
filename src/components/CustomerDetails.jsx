@@ -15,6 +15,11 @@ import MipMaturityModal from "../modal/MipMaturityModal";
 import MipEmiPayModal from "../modal/MipEmiPayModal";
 // import { apiCustomerUrl } from "../../api/apiRoutes";
 
+const maskSensitiveInfo = (info) => {
+  if (!info) return "N/A";
+  return String(info).replace(/.(?=.{4})/g, '*');
+};
+
 function CustomerDetails() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -222,7 +227,7 @@ function CustomerDetails() {
                   <div className="flex-1">
                     <span className="text-sm font-medium text-gray-600">Aadhaar Number</span>
                     <p className="text-gray-800 font-semibold">
-                      {customer?.AadharNo || "N/A"}
+                      {maskSensitiveInfo(customer?.AadharNo)}
                     </p>
                   </div>
                 </div>
@@ -240,7 +245,7 @@ function CustomerDetails() {
                   <div className="flex-1">
                     <span className="text-sm font-medium text-gray-600">PAN Card</span>
                     <p className="text-gray-800 font-semibold">
-                      {customer?.panCard || "N/A"}
+                      {maskSensitiveInfo(customer?.panCard)}
                     </p>
                   </div>
                 </div>
@@ -369,7 +374,7 @@ function CustomerDetails() {
                     <div className="flex-1">
                       <span className="text-sm font-medium text-gray-600">Aadhaar Number</span>
                       <p className="text-gray-800 font-semibold">
-                        {customer.NomineeDetails.AadharNo || "N/A"}
+                        {maskSensitiveInfo(customer.NomineeDetails.AadharNo)}
                       </p>
                     </div>
                   </div>
@@ -379,7 +384,7 @@ function CustomerDetails() {
                     <div className="flex-1">
                       <span className="text-sm font-medium text-gray-600">PAN Card</span>
                       <p className="text-gray-800 font-semibold">
-                        {customer.NomineeDetails.panCard || "N/A"}
+                        {maskSensitiveInfo(customer.NomineeDetails.panCard)}
                       </p>
                     </div>
                   </div>
@@ -516,10 +521,10 @@ function CustomerDetails() {
                               ₹{fd.fdMaturityAmount ? Number(fd.fdMaturityAmount).toLocaleString("en-IN") : "0"}
                             </p>
                           </div>
-                          <div>
-                            <span className="text-sm font-medium text-gray-600">Status</span>
+                          <div >
+                            <span className="text-sm font-medium inline-block mr-2 text-gray-600">Status</span>
                             <span
-                              className={`inline-block px-3 py-1 rounded-full text-sm font-bold ${fd.fdAccountStatus === "active"
+                              className={`inline-block px-2 py-1 rounded-full text-sm font-bold ${fd.fdAccountStatus === "active"
                                 ? "bg-green-200 text-green-800"
                                 : fd.fdAccountStatus === "matured"
                                   ? "bg-blue-200 text-blue-800"
@@ -749,7 +754,7 @@ function CustomerDetails() {
                         <p className="text-xl font-bold text-purple-600">₹{Number(rd.rdMaturityAmount).toLocaleString("en-IN")}</p>
                       </div>
                       <div>
-                        <span className="text-sm font-medium text-gray-600">Status</span>
+                        <span className="text-sm font-medium inline-block mr-2 text-gray-600">Status</span>
                         <span className={`inline-block px-3 py-1 rounded-full text-sm font-bold ${rd.rdAccountStatus === "active"
                           ? "bg-green-200 text-green-800"
                           : rd.rdAccountStatus === "matured"
@@ -886,7 +891,14 @@ function CustomerDetails() {
                       <div>
                         <span className="text-sm font-medium text-gray-600">Opening Date</span>
                         <p className="text-lg font-semibold text-gray-800">
-                          {loan.loanOpeningDate ? new Date(loan.loanOpeningDate).toLocaleDateString() : "N/A"}
+                          {loan.loanOpeningDate ? new Date(loan.loanOpeningDate).toLocaleString("en-IN", {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: true
+                          }) : "N/A"}
                         </p>
                       </div>
                       <div>
@@ -926,7 +938,7 @@ function CustomerDetails() {
                     <div className="space-y-3">
 
                       <div>
-                        <span className="text-sm font-medium text-gray-600">Status</span>
+                        <span className="text-sm font-medium inline-block mr-2 text-gray-600">Status</span>
                         <span className={`inline-block px-3 py-1 rounded-full text-sm font-bold ${loan.loanStatus === 'active'
                           ? 'bg-green-200 text-green-800'
                           : loan.loanStatus === 'closed'
@@ -1071,7 +1083,7 @@ function CustomerDetails() {
                         <p className="text-lg font-bold text-blue-600">₹{Number(pigmy.pigMyTotalDepositedAmount).toLocaleString("en-IN")}</p>
                       </div>
                       <div>
-                        <span className="text-sm font-medium text-gray-600"> Total No. InstallMent Deposited</span>
+                        <span className="text-sm font-medium text-gray-600"> Total No. Installment Deposited</span>
                         <p className="text-lg font-semibold text-gray-800">
                           {pigmy.pigMyTotalInstallmentDeposited || "N/A"}
                         </p>
@@ -1087,7 +1099,7 @@ function CustomerDetails() {
                                                 <p className="text-xl font-bold text-purple-600">{new Date(loan.loanNextEmiDate).toDateString()}</p>
                                             </div> */}
                       <div>
-                        <span className="text-sm font-medium text-gray-600">Status</span>
+                        <span className="text-sm font-medium inline-block mr-2 text-gray-600">Status</span>
                         <span className={`inline-block px-3 py-1 rounded-full text-sm font-bold ${pigmy.pigmyAccount === 'active'
                           ? 'bg-green-200 text-green-800'
                           : pigmy.pigmyAccount === 'matured'
@@ -1257,7 +1269,7 @@ function CustomerDetails() {
                         <p className="text-lg font-bold text-blue-600">₹{Number(lakhpatiSchemes.lakhpatiYojanaTotalDepositedAmount).toLocaleString("en-IN")}</p>
                       </div>
                       <div>
-                        <span className="text-sm font-medium text-gray-600"> Total No. InstallMent Deposited</span>
+                        <span className="text-sm font-medium text-gray-600"> Total No. Installent Deposited</span>
                         <p className="text-lg font-semibold text-gray-800">
                           {lakhpatiSchemes.lakhpatiYojanaTotalDepositedInstallments || "N/A"}
                         </p>
@@ -1287,7 +1299,7 @@ function CustomerDetails() {
                                                 <p className="text-xl font-bold text-purple-600">{new Date(loan.loanNextEmiDate).toDateString()}</p>
                                             </div> */}
                       <div>
-                        <span className="text-sm font-medium text-gray-600">Status</span>
+                        <span className="text-sm font-medium inline-block mr-2 text-gray-600">Status</span>
                         <span className={`inline-block px-3 py-1 rounded-full text-sm font-bold ${lakhpatiSchemes.lakhpatiYojanaAccountStatus === 'active'
                           ? 'bg-green-200 text-green-800'
                           : lakhpatiSchemes.lakhpatiYojanaAccountStatus === 'matured'
@@ -1464,7 +1476,7 @@ function CustomerDetails() {
                         <p className="text-lg font-bold text-blue-600">₹{mipScheme.mipMonthlyInterestPay}</p>
                       </div>
                       <div>
-                        <span className="text-sm font-medium text-gray-600">Status</span>
+                        <span className="text-sm font-medium inline-block mr-2 text-gray-600">Status</span>
                         <span
                           className={`inline-block px-3 py-1 rounded-full text-sm font-bold ${mipScheme.mipAccountStatus === "active"
                             ? "bg-green-200 text-green-800"
